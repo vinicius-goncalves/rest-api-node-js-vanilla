@@ -8,7 +8,7 @@ Este projeto depende do NodeJS, portanto, em seu ```terminal``` para realizar a 
 
 > npm install
 
-## Comandos NodeJS ```package.json```)
+## Comandos NodeJS ```package.json```
 Utilize os comandos abaixo para a versão específicada:
 
 produção (production):
