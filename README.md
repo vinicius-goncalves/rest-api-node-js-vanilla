@@ -16,3 +16,5 @@ produção (production):
 
 desenvolvimento (development):
 > npm run dev
+
+Projeto sob [licença](LICENSE.md) GPL 3.0
