@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "product": "Samsung Galaxy A03 Dual SIM 64 GB azul 4 GB RAM",
+        "price": 949.99,
+        "available": 100,
+        "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+        "type": "Eletrônicos"
+    },
+    {
+        "id": 2,
+        "product": "Cartão de memória SanDisk SDSQUNS-064G-GN3MA Ultra com adaptador SD 64GB",
+        "price": 44.90,
+        "available": 270,
+        "image": "https://images-americanas.b2w.io/produtos/4340140106/imagens/cartao-de-memoria-sandisk-sdsquns-064g-gn3ma-ultra-sd-64gb/4340140114_1_large.jpg",
+        "type": "Eletrônicos"
+    },
+    {
+        "id": 3,
+        "product": "Disco rígido externo Seagate Expansion STEA1000400 1TB preto",
+        "price": 309.99,
+        "available": 84,
+        "image": "https://http2.mlstatic.com/D_NQ_NP_978976-MLA50135247259_052022-O.webp",
+        "type": "Eletrônicos"
+    },
+    {
+        "id": 4,
+        "product": "Caixa de Bombom Garoto 250g",
+        "price": 10.99,
+        "available": 127,
+        "image": {
+            "first_option": "https://images-americanas.b2w.io/produtos/01/00/img/1417116/1/1417116105_1GG.jpg"
+        },
+        "type": "Alimentos e Bebidas"
+    },
+    {
+        "id": 5,
+        "product": "Nutella Creme de Avelã 1 Unidade 140g",
+        "price": 10.49,
+        "available": 64,
+        "image": {
+            "first_option": "https://cf.shopee.com.br/file/a4e6b90762b7399494ac15e1d72550ca"
+        },
+        "type": "Alimentos e Bebidas"
+    }
+]
