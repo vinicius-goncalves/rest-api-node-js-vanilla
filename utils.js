@@ -24,7 +24,7 @@ const getReceivedData = (request, response) => {
     })
 }
 
-const postProductExample = {
+const productExample = {
     
     product: 'Product Name',
     price: 9.99,
@@ -35,5 +35,5 @@ const postProductExample = {
 
 module.exports = {
     getReceivedData,
-    postProductExample
+    productExample
 }

@@ -1,5 +1,5 @@
 const ProductsModel = require('../models/ProductsModel')
-const Utils = require('../utils')
+const Utils = require('../utils').default
 
 const getProducts = async (request, response) => {
 
@@ -29,36 +29,27 @@ const createProduct = async (request, response) => {
     
     try {
 
-        Utils.getReceivedData(request, response).then(data => {
-            const productObject = JSON.parse(data)
+        const newProduct = await Utils.getReceivedData(request, response)
+        const product = JSON.parse(newProduct)
 
-            if('id' in productObject) {
-                const data = JSON.stringify(Utils.postProductExample, null, 2)
-                const javascriptObject = JSON.parse(data)
-                const objectEntries = Object.entries(javascriptObject)
+        if('id' in product) {
 
-                const objectError = {
-                    status: 'error',
-                    codeStatus: 400,
-                    errorTitle: 'Incorrect JSON format',
-                    errorMessage: 'Use the format below to make POSTs requests',
-                    correctForm: {
-                        
-                    }
+            const objectError = {
+                status: 'error',
+                codeStatus: 400,
+                errorTitle: 'Incorrect JSON format',
+                errorMessage: 'Use the format below to make POSTs requests',
+                correctForm: {
+                    ...Utils.productExample
                 }
-
-                objectEntries.forEach(([key, value]) => {
-                    Object.defineProperty(objectError.correctForm, key, {
-                        value,
-                        configurable: true,
-                        enumerable: true
-                    })
-                })
-                
-                response.writeHead(400, { 'Content-Type': 'application/json' })
-                response.end(JSON.stringify(objectError, null, 2))
             }
-        })
+            
+            response.writeHead(400, { 'Content-Type': 'application/json' })
+            response.end(JSON.stringify(objectError, null, 2))
+        } else {
+            response.writeHead(200, { 'Content-Type': 'application/json' })
+            response.end(JSON.stringify({ status: 'Sucesso' }))
+        }
         
     } catch(error) {
         console.log(error)
