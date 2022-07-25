@@ -86,12 +86,12 @@
 
         })
 
-        tempKeyRequest.addEventListener('click', () => {
-            fetch('http://localhost:8080/api/temp_key').then(data => {
-                return data.json()
-            }).then(result => {
-                console.log(result)
-            })
+        tempKeyRequest.addEventListener('click', async () => {
+            const response = await fetch('http://localhost:8080/api/temp_key')
+            const data = await response.json()
+            
+            console.log('The temp key is: %s', data.key)
+
         })
 
     </script>

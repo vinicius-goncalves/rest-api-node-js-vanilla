@@ -91,29 +91,24 @@ const createProduct = async (request, response) => {
 const createTempKey = (request, response) => {
     fs.readFile(tempDataPath, (_, data) => {
         const dataObject = JSON.parse(data)
-        const uuid = Utils.randomUUID()
+        const uuid = JSON.stringify( { key: Utils.randomUUID() }, null, 2 )
+
         switch(dataObject.key === '') {
             case true:
                 
-                fs.writeFile(tempDataPath, JSON.stringify({ key: uuid }, null, 2), (error) => {
-                    if(error) {
-                        return console.log(error)
-                    }
-                })
-                
+                fs.writeFileSync(tempDataPath, uuid)
+
                 response.writeHead(200, { 'Content-Type': 'application/json' })
-                response.write(data)
+                response.write(uuid)
                 response.end()
                 break
 
             case false:
                 
-                const keyUUID = JSON.stringify({ key: uuid })
-
-                fs.writeFileSync(tempDataPath, keyUUID, null, 2)
+                fs.writeFileSync(tempDataPath, uuid)
                 response.writeHead(200, { 'Content-Type': 'application/json' })
-                response.end(keyUUID)
-                
+                response.write(uuid)
+                response.end()
                 break
             }
     })
