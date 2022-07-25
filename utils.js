@@ -24,16 +24,36 @@ const getReceivedData = (request, response) => {
     })
 }
 
+function ErrorCreator(status, codeStatus, title, message, correctForm) {
+    this.status = status
+    this.codeStatus = codeStatus
+    this.title = title
+    this.message = message
+    this.correctForm = correctForm
+}
+
 const productExample = {
     
     product: 'Product Name',
     price: 9.99,
     available: 99,
     image: 'http://localhost',
-    type: 'Product Type'
+    type: 'Product Type'   
+}
+
+const randomUUID = () => {
+    let dateTime = new Date().getTime()
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const random = Math.floor(dateTime + Math.random() * 16) % 16 | 0
+        dateTime = Math.floor(dateTime / 16)
+        return (c === 'x' ? random : (random & 0x3 | 0x8)).toString(16)
+    })
+    return uuid
 }
 
 module.exports = {
     getReceivedData,
-    productExample
+    productExample,
+    ErrorCreator,
+    randomUUID
 }

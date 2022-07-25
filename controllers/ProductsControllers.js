@@ -1,6 +1,14 @@
-const ProductsModel = require('../models/ProductsModel')
-const Utils = require('../utils').default
+const { randomUUID } = require('crypto')
+const fs = require('fs')
+const path = require('path')
 
+const ProductsModel = require('../models/ProductsModel')
+const Utils = require('../utils')
+
+const tempDataPath = path.join(__dirname, '../', 'database', 'temp_data', 'temp_key.json')
+
+// @route GET /api/products
+// @description This is going to get all the products in database folder
 const getProducts = async (request, response) => {
 
     const { ...headers } = await request?.headers ?? 'Headers details no found'
@@ -25,6 +33,33 @@ const getProducts = async (request, response) => {
     }
 }
 
+const getProductByID = async (request, response, id) => {
+    try {
+
+        const product = await ProductsModel.getByID(Number(id))
+
+        switch(product) {
+            case undefined:
+                response.writeHead(404, { 'Content-Type': 'application/json' })
+                response.end()
+                break
+            case product:
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify(product, null, 2))
+                break
+            default:
+                response.writeHead(500, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify({ message: 'Internal error' }))
+                break
+        }
+        
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.end()
+    } catch(error) {
+        console.log(error)
+    }
+}
+
 const createProduct = async (request, response) => {
     
     try {
@@ -34,21 +69,18 @@ const createProduct = async (request, response) => {
 
         if('id' in product) {
 
-            const objectError = {
-                status: 'error',
-                codeStatus: 400,
-                errorTitle: 'Incorrect JSON format',
-                errorMessage: 'Use the format below to make POSTs requests',
-                correctForm: {
-                    ...Utils.productExample
-                }
-            }
             
+            const error = new Utils.ErrorCreator('Error', 
+            400, 
+            'Incorret JSON format', 
+            'Use the format below to make POSTs request. Found \'id\' in your request.', 
+            { ...Utils.productExample })
+
             response.writeHead(400, { 'Content-Type': 'application/json' })
-            response.end(JSON.stringify(objectError, null, 2))
+            response.end(JSON.stringify(error, null, 2))
         } else {
             response.writeHead(200, { 'Content-Type': 'application/json' })
-            response.end(JSON.stringify({ status: 'Sucesso' }))
+            response.end(JSON.stringify({ status: 'Sucess' }))
         }
         
     } catch(error) {
@@ -56,7 +88,40 @@ const createProduct = async (request, response) => {
     }
 }
 
+const createTempKey = (request, response) => {
+    fs.readFile(tempDataPath, (_, data) => {
+        const dataObject = JSON.parse(data)
+        const uuid = Utils.randomUUID()
+        switch(dataObject.key === '') {
+            case true:
+                
+                fs.writeFile(tempDataPath, JSON.stringify({ key: uuid }, null, 2), (error) => {
+                    if(error) {
+                        return console.log(error)
+                    }
+                })
+                
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.write(data)
+                response.end()
+                break
+
+            case false:
+                
+                const keyUUID = JSON.stringify({ key: uuid })
+
+                fs.writeFileSync(tempDataPath, keyUUID, null, 2)
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(keyUUID)
+                
+                break
+            }
+    })
+}
+
 module.exports = { 
     getProducts,
-    createProduct
+    getProductByID,
+    createProduct,
+    createTempKey
 }

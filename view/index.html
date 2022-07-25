@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Tests</title>
+    <style>
+
+        :root {
+            font-size: 19px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #4133ff;
+            font-family: 'Verdana', sans-serif;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .buttons-container {
+            width: 100%;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .buttons-container input {
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            box-shadow: 5px 5px #130996;
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .buttons-container input:active {
+            transform: scale(.97)
+        }
+    </style>
+</head>
+<body>
+    <h1>fetch to api | test</h1>
+    <small>Open the user agent's console <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>I</kbd></small>
+    <div class="buttons-container">
+        <input type="button" value="fetch request" id="fetchRequest">
+        <input type="button" value="xhr request" id="xhrRequest">
+        <input type="button" value="temp key request" id="temp-key-request">
+    </div>
+    <script>
+
+        const fetchRequest = document.querySelector('#fetchRequest')
+        const xhrRequest = document.querySelector('#xhrRequest')
+        const tempKeyRequest = document.querySelector('#temp-key-request')
+
+        const fetchHeaders = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+        
+        fetchRequest.addEventListener('click', async () => {
+            const response = await fetch('http://localhost:8080/api/products', fetchHeaders)
+            const data = await response.json()
+            console.log(data)
+        })
+        
+        xhrRequest.addEventListener('click', () => {
+            const promise = new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest()
+                xhr.addEventListener('load', event => {
+                    const { response } = event.target
+                    if(response) {
+                        resolve(JSON.parse(response))
+                    }
+                })
+                
+                xhr.open('GET', 'http://localhost:8080/api/products')
+                xhr.send()
+            })
+
+            promise.then(fulfilled => console.log(fulfilled))
+
+        })
+
+        tempKeyRequest.addEventListener('click', () => {
+            fetch('http://localhost:8080/api/temp_key').then(data => {
+                return data.json()
+            }).then(result => {
+                console.log(result)
+            })
+        })
+
+    </script>
+</body>
+</html>
