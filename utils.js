@@ -24,7 +24,7 @@ const getReceivedData = (request, response) => {
     })
 }
 
-function ErrorCreator(status, codeStatus, title, message, correctForm) {
+function JSONMessageCreator(status, codeStatus, title, message, correctForm = null) {
     this.status = status
     this.codeStatus = codeStatus
     this.title = title
@@ -38,7 +38,9 @@ const productExample = {
     price: 9.99,
     available: 99,
     image: 'http://localhost',
-    type: 'Product Type'   
+    type: 'Product Type',
+    key: 'Your temp-key. Check if your temp-key is not missing in your post request'
+
 }
 
 const randomUUID = () => {
@@ -54,6 +56,6 @@ const randomUUID = () => {
 module.exports = {
     getReceivedData,
     productExample,
-    ErrorCreator,
+    JSONMessageCreator,
     randomUUID
 }
