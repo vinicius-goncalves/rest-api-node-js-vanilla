@@ -42,13 +42,15 @@ const deleteByID = (id) => {
 
 const update = (id, newProduct) => {
     return new Promise((resolve, _) => {
-        return products.find((item, index) => {
+        const productIndex = products.findIndex(item => {
             if(item.id === id) {
-                products[index] = { id, ...newProduct }
-                resolve(products[index])
                 return item
             }
         })
+
+        products[productIndex] = { id, ...newProduct }
+        resolve(products[productIndex])
+        
     })
 }
 
