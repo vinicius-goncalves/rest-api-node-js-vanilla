@@ -5,10 +5,10 @@ const products = require('../database/products.json')
 const Utils = require('../utils')
 const productsPath = path.join(__dirname, '../', '/database', 'products.json')
 
-const getAll = () => new Promise(resolve => resolve(products))
+const getAll = () => new Promise((resolve, _) => resolve(products))
 
 const getByID = (id) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, _) => {
         const productID = products.find(product => product.id === id)
         resolve(productID)
     }) 
@@ -28,8 +28,21 @@ const create = (newProduct, uuid) => {
     })
 }
 
+const deleteByID = (id) => {
+    return new Promise((resolve, _) => {
+        return products.find((item, index) =>  {
+            if(item.id === id) {
+                products.splice(index, 1)
+                fs.writeFileSync(productsPath, JSON.stringify(products, null, 2))
+                resolve()
+            }
+        })
+    })
+}
+
 module.exports = {
     getAll,
     getByID,
-    create
+    create,
+    deleteByID
 }

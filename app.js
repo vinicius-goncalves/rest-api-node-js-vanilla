@@ -49,6 +49,11 @@ const server = http.createServer((request, response) => {
                 break
             }
 
+        case 'delete':
+            if(url === '/api/product/delete') {
+                ProductControllers.deleteProduct(request, response)
+                break
+            }
         default:
             response.writeHead(404, { 'Content-Type': 'application/json' })
             response.write('Error 404 - Not found')

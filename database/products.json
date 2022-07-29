@@ -32,23 +32,5 @@
       "first_option": "https://images-americanas.b2w.io/produtos/01/00/img/1417116/1/1417116105_1GG.jpg"
     },
     "type": "Alimentos e Bebidas"
-  },
-  {
-    "id": 5,
-    "product": "Nutella Creme de Avelã 1 Unidade 140g",
-    "price": 10.49,
-    "available": 64,
-    "image": {
-      "first_option": "https://cf.shopee.com.br/file/a4e6b90762b7399494ac15e1d72550ca"
-    },
-    "type": "Alimentos e Bebidas"
-  },
-  {
-    "id": "7cbdc941-ad87-472c-8a3f-f70bdd3cf3ae",
-    "product": "Samsung Galaxy A03 Dual SIM 64 GB azul 4 GB RAM",
-    "price": 949.99,
-    "available": 100,
-    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
-    "type": "Eletrônicos"
   }
 ]

@@ -6,6 +6,7 @@ const ProductsModel = require('../models/ProductsModel')
 const Utils = require('../utils')
 
 const tempKey = path.join(__dirname, '../', 'database', 'temp_data', 'temp_key.json')
+const tempKeyTest = require('../database/temp_data/temp_key.json')
 
 // @route GET /api/products
 // @description This is going to get all the products in database folder
@@ -136,9 +137,45 @@ const createProduct = async (request, response) => {
     }
 }
 
+const deleteProduct = async (request, response) => {
+    try {
+
+        const dataReceived = await Utils.getReceivedData(request, response)
+        const product = JSON.parse(dataReceived)
+        
+        const productFound = await ProductsModel.getByID(product.id)
+
+        if(productFound === undefined) {
+            response.writeHead(400, { 'Content-Type': 'application/json' })
+            response.write(JSON.stringify({ message: 'Product not found' }))
+            response.end()
+            return
+        }
+
+        if(product['temp-key'] !== tempKeyTest.key) {
+            response.writeHead(400, { 'Content-Type': 'application/json' })
+            response.write(JSON.stringify({ message: 'Your key is invalid. '}))
+            response.end()
+            return
+        }
+
+        await ProductsModel.deleteByID(Number(product.id))
+        response.writeHead(202, { 'Content-Type': 'application/json' })
+        response.write(JSON.stringify({ message: 'Your request was accept. Content deleted succefully' }))
+        response.end()
+
+    } catch(error) {
+        console.log(error)
+        response.writeHead(400, { 'Content-Type': 'application/json' })
+        response.write(JSON.stringify({ message: 'Bad request, try again. '}))
+        response.end()
+    }
+}
+
 module.exports = { 
     getProducts,
     getProductByID,
     createProduct,
-    createTempKey
+    createTempKey,
+    deleteProduct
 }
