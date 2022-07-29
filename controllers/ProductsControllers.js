@@ -1,9 +1,9 @@
-const { randomUUID } = require('crypto')
 const fs = require('fs')
 const path = require('path')
 
 const ProductsModel = require('../models/ProductsModel')
 const Utils = require('../utils')
+const products = require('../database/products.json')
 
 const tempKey = path.join(__dirname, '../', 'database', 'temp_data', 'temp_key.json')
 const tempKeyTest = require('../database/temp_data/temp_key.json')
@@ -61,7 +61,7 @@ const getProducts = async (request, response) => {
     }
 }
 
-const getProductByID = async (request, response, id) => {
+const getProductByID = async (response, id) => {
     try {
 
         const product = await ProductsModel.getByID(Number(id))
@@ -130,8 +130,6 @@ const createProduct = async (request, response) => {
             }
         })
 
-
-
     } catch(error) {
         console.log(error)
     }
@@ -165,10 +163,53 @@ const deleteProduct = async (request, response) => {
         response.end()
 
     } catch(error) {
-        console.log(error)
         response.writeHead(400, { 'Content-Type': 'application/json' })
-        response.write(JSON.stringify({ message: 'Bad request, try again. '}))
+        response.write(JSON.stringify({ message: 'Bad request, try again.'}))
         response.end()
+    }
+}
+
+const updateProduct = async (request, response) => {
+    try {
+        
+        const data = await Utils.getReceivedData(request, response)
+        const product = JSON.parse(data)
+
+        const { id, name, price, available, image, type } = product
+
+        const productToUpdate = await ProductsModel.getByID(product.id)
+        
+        if(productToUpdate === undefined) {
+            console.log(productToUpdate)
+            response.end()
+            return
+        }
+
+        if(product['temp-key'] !== tempKeyTest.key) {
+            response.writeHead(400, {'Content-Type':'application/json'})
+            response.write(JSON.stringify({ message: 'Temp key invalid' }))
+            response.end()
+            return
+        }
+
+        const newProduct = {
+            id,
+            name: name || productToUpdate.name,
+            price: price || productToUpdate.price,
+            available: available || productToUpdate.available,
+            image: image || productToUpdate.image,
+            type: type || productToUpdate.type,
+        }
+
+        await ProductsModel.update(id, { ...newProduct })
+
+        console.log(products)
+
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.end()
+
+    } catch(error) {
+        console.log(error)
     }
 }
 
@@ -177,5 +218,6 @@ module.exports = {
     getProductByID,
     createProduct,
     createTempKey,
-    deleteProduct
+    deleteProduct,
+    updateProduct
 }

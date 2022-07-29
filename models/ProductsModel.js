@@ -40,9 +40,22 @@ const deleteByID = (id) => {
     })
 }
 
+const update = (id, newProduct) => {
+    return new Promise((resolve, _) => {
+        return products.find((item, index) => {
+            if(item.id === id) {
+                products[index] = { id, ...newProduct }
+                resolve(products[index])
+                return item
+            }
+        })
+    })
+}
+
 module.exports = {
     getAll,
     getByID,
     create,
-    deleteByID
+    deleteByID,
+    update
 }

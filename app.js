@@ -34,7 +34,7 @@ const server = http.createServer((request, response) => {
             
             if(url.match(/\/api\/product\/[0-9]/g)) {
                 const id = url.split('/')[3]
-                ProductControllers.getProductByID(request, response, id)
+                ProductControllers.getProductByID(response, id)
                 break
             }
 
@@ -52,6 +52,11 @@ const server = http.createServer((request, response) => {
         case 'delete':
             if(url === '/api/product/delete') {
                 ProductControllers.deleteProduct(request, response)
+                break
+            }
+        case 'put':
+            if(url === '/api/product/update') {
+                ProductControllers.updateProduct(request, response)
                 break
             }
         default:
