@@ -53,7 +53,7 @@ Todo o tutorial será baseado em um servidor local, não irá mudar muito caso v
 
 | Feito por |
 | -------- | 
-|<img src="https://avatars.githubusercontent.com/u/74028582?v=4" width="128">|
-|<a href="https://github.com/vinicius-goncalves/">Vinícius Gonçalves</a>|
+|<a href="https://github.com/vinicius-goncalves"> <img src="https://avatars.githubusercontent.com/u/74028582?v=4" width="128"> </a>|
+|<a href="https://github.com/vinicius-goncalves">Vinícius Gonçalves</a>|
 
 Projeto sob [licença](LICENSE.md) GPL 3.0
