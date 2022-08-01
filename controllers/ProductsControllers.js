@@ -3,6 +3,7 @@ const path = require('path')
 
 const ProductsModel = require('../models/ProductsModel')
 const Utils = require('../utils')
+const MessagesUtils = require('../js/messages-utils')
 const products = require('../database/products.json')
 
 const tempKey = path.join(__dirname, '../', 'database', 'temp_data', 'temp_key.json')
@@ -63,7 +64,6 @@ const getProducts = async (request, response) => {
 
 const getProductByID = async (response, id) => {
     try {
-
         const product = await ProductsModel.getByID(Number(id))
 
         switch(product) {
@@ -83,31 +83,33 @@ const getProductByID = async (response, id) => {
         
         response.writeHead(200, { 'Content-Type': 'application/json' })
         response.end()
+
     } catch(error) {
-        console.log(error)
+        response.writeHead(400, { 'Content-Type': 'application/json' })
+        response.write(JSON.stringify({ message: 'Bad request, try again.' }))
+        response.end()
     }
 }
 
 const createProduct = async (request, response) => {
     
     try {
-
         const newProduct = await Utils.getReceivedData(request, response)
         const product = JSON.parse(newProduct)
 
-        if('id' in product || !'temp-key' in product) {
-            const error = new Utils.JSONMessageCreator('Error', 
-            400, 
-            'Incorret JSON format', 
-            'Use the format below to make POSTs request. Found \'id\' in your request.', 
-            { ...Utils.productExample })
-    
+        const propertiesMustExist = ['name', 'price', 'available', 'image', 'type', 'temp-key']
+        const productProperties = Object.getOwnPropertyNames(product)
+        const allPropertiesExist = productProperties.every(property => propertiesMustExist.includes(property))
+        
+        if(!allPropertiesExist) {
             response.writeHead(400, { 'Content-Type': 'application/json' })
+            response.write(JSON.stringify(MessagesUtils.incorretPostFormat, null, 2))
             response.end(JSON.stringify(error, null, 2))
             return
         }
 
         fs.readFile(tempKey, (error, data) => {
+
             if(error) {
                 response.end()
                 return console.log(error)
@@ -127,17 +129,20 @@ const createProduct = async (request, response) => {
                 response.writeHead(201, { 'Content-Type': 'application/json' })
                 response.write(JSON.stringify(correctSuccess))
                 response.end()
+                
             }
         })
 
     } catch(error) {
         console.log(error)
+        response.writeHead(400, { 'Content-Type': 'application/json' })
+        response.write(JSON.stringify({ message: 'Bad request, try again.' }))
+        response.end()
     }
 }
 
 const updateProduct = async (request, response) => {
     try {
-        
         const data = await Utils.getReceivedData(request, response)
         const product = JSON.parse(data)
         const { id } = product
@@ -180,16 +185,19 @@ const updateProduct = async (request, response) => {
 
     } catch(error) {
         console.log(error)
+        response.writeHead(400, { 'Content-Type': 'application/json' })
+        response.write(JSON.stringify({ message: 'Bad request, try again.' }))
+        response.end()
     }
 }
 
 const deleteProduct = async (request, response) => {
     try {
-
         const dataReceived = await Utils.getReceivedData(request, response)
         const product = JSON.parse(dataReceived)
+        const { id } = product
         
-        const productFound = await ProductsModel.getByID(product.id)
+        const productFound = await ProductsModel.getByID(id)
 
         if(productFound === undefined) {
             response.writeHead(400, { 'Content-Type': 'application/json' })
@@ -205,7 +213,7 @@ const deleteProduct = async (request, response) => {
             return
         }
 
-        await ProductsModel.deleteByID(Number(product.id))
+        await ProductsModel.deleteByID(Number(id))
         response.writeHead(202, { 'Content-Type': 'application/json' })
         response.write(JSON.stringify({ message: 'Your request was accept. Content deleted succefully' }))
         response.end()

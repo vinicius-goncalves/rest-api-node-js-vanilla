@@ -29,13 +29,12 @@ const create = (newProduct, uuid) => {
 
 const deleteByID = (id) => {
     return new Promise((resolve, _) => {
-        return products.find((item, index) =>  {
-            if(item.id === id) {
-                products.splice(index, 1)
-                fs.writeFileSync(productsPath, JSON.stringify(products, null, 2))
-                resolve()
-            }
-        })
+        const productFoundIndex = products.findIndex(item => item.id === id)
+
+        products.splice(productFoundIndex, 1)
+        fs.writeFileSync(productsPath, JSON.stringify(products, null, 2))
+        resolve()
+        
     })
 }
 
@@ -46,6 +45,7 @@ const update = (id, newProduct) => {
         const propertiesToDelete = ['temp-key', 'id']
 
         const newProductProperties = Object.getOwnPropertyNames(newProduct)
+
         newProductProperties.forEach(property => {
             switch(propertiesToDelete.includes(property)) {
                 case true:
@@ -60,7 +60,7 @@ const update = (id, newProduct) => {
         fs.writeFileSync(productsPath, JSON.stringify(products, null, 2))
         
         resolve(products[productIndex])
-        
+
     })
 }
 

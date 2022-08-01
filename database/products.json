@@ -38,5 +38,61 @@
     "available": 64,
     "image": "https://cf.shopee.com.br/file/a4e6b90762b7399494ac15e1d72550ca",
     "type": "Alimentos e Bebidas"
+  },
+  {
+    "id": "86684f6b-20d7-4823-8032-743e98ac1fd5",
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
+  },
+  {
+    "id": "7d010bed-7ccc-4ad9-9027-2add14d91c8f",
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
+  },
+  {
+    "id": "4e301127-b6c2-41ec-a4e9-f85203997918",
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
   }
 ]

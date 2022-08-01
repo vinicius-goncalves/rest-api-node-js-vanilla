@@ -34,12 +34,12 @@ function JSONMessageCreator(status, codeStatus, title, message, correctForm = nu
 
 const productExample = {
     
-    product: 'Product Name',
+    name: 'Product Name',
     price: 9.99,
     available: 99,
     image: 'http://localhost',
     type: 'Product Type',
-    key: 'Your temp-key. Check if your temp-key is not missing in your post request'
+    ['temp-key']: 'Your temp-key. Check if your temp-key is not missing in your post request'
 
 }
 
