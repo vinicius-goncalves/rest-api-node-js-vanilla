@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 
 const products = require('../database/products.json')
-const Utils = require('../utils')
 const productsPath = path.join(__dirname, '../', '/database', 'products.json')
 
 const getAll = () => new Promise((resolve, _) => resolve(products))
@@ -42,13 +41,24 @@ const deleteByID = (id) => {
 
 const update = (id, newProduct) => {
     return new Promise((resolve, _) => {
-        const productIndex = products.findIndex(item => {
-            if(item.id === id) {
-                return item
+
+        const productIndex = products.findIndex(item => item.id === id)
+        const propertiesToDelete = ['temp-key', 'id']
+
+        const newProductProperties = Object.getOwnPropertyNames(newProduct)
+        newProductProperties.forEach(property => {
+            switch(propertiesToDelete.includes(property)) {
+                case true:
+                    Reflect.deleteProperty(newProduct, property)
+                    break
+                default: 
+                    break
             }
         })
 
         products[productIndex] = { id, ...newProduct }
+        fs.writeFileSync(productsPath, JSON.stringify(products, null, 2))
+        
         resolve(products[productIndex])
         
     })

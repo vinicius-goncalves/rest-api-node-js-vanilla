@@ -135,6 +135,54 @@ const createProduct = async (request, response) => {
     }
 }
 
+const updateProduct = async (request, response) => {
+    try {
+        
+        const data = await Utils.getReceivedData(request, response)
+        const product = JSON.parse(data)
+        const { id } = product
+
+        const productToUpdate = await ProductsModel.getByID(product.id)
+        
+        if(productToUpdate === undefined) {
+            console.log(productToUpdate)
+            response.end()
+            return
+        }
+
+        if(product['temp-key'] !== tempKeyTest.key) {
+            response.writeHead(400, {'Content-Type':'application/json'})
+            response.write(JSON.stringify({ message: 'Temp key invalid' }))
+            response.end()
+            return
+        }
+        
+        const productsEntries = Object.entries(product)
+        
+        const newProduct = {}
+
+        productsEntries.forEach(pair => {
+            const [ key, value ] = pair
+
+            const propertyConfig = {
+                value: value || productToUpdate[key],
+                writable: true,
+                enumerable: true
+            }
+
+            Object.defineProperty(newProduct, key, propertyConfig)
+        })
+
+        await ProductsModel.update(id, { ...newProduct })
+
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.end()
+
+    } catch(error) {
+        console.log(error)
+    }
+}
+
 const deleteProduct = async (request, response) => {
     try {
 
@@ -166,50 +214,6 @@ const deleteProduct = async (request, response) => {
         response.writeHead(400, { 'Content-Type': 'application/json' })
         response.write(JSON.stringify({ message: 'Bad request, try again.'}))
         response.end()
-    }
-}
-
-const updateProduct = async (request, response) => {
-    try {
-        
-        const data = await Utils.getReceivedData(request, response)
-        const product = JSON.parse(data)
-
-        const { id, name, price, available, image, type } = product
-
-        const productToUpdate = await ProductsModel.getByID(product.id)
-        
-        if(productToUpdate === undefined) {
-            console.log(productToUpdate)
-            response.end()
-            return
-        }
-
-        if(product['temp-key'] !== tempKeyTest.key) {
-            response.writeHead(400, {'Content-Type':'application/json'})
-            response.write(JSON.stringify({ message: 'Temp key invalid' }))
-            response.end()
-            return
-        }
-
-        const newProduct = {
-            id,
-            name: name || productToUpdate.name,
-            price: price || productToUpdate.price,
-            available: available || productToUpdate.available,
-            image: image || productToUpdate.image,
-            type: type || productToUpdate.type,
-        }
-
-        await ProductsModel.update(id, { ...newProduct })
-
-        console.log(products)
-
-        response.writeHead(200, { 'Content-Type': 'application/json' })
-        response.end()
-
-    } catch(error) {
-        console.log(error)
     }
 }
 

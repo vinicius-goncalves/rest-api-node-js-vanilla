@@ -25,22 +25,18 @@
   },
   {
     "id": 4,
-    "name": "Caixa de Bombom Garoto 250g",
-    "price": 10.99,
-    "available": 127,
-    "image": {
-      "first_option": "https://images-americanas.b2w.io/produtos/01/00/img/1417116/1/1417116105_1GG.jpg"
-    },
-    "type": "Alimentos e Bebidas"
+    "name": "Samsung Galaxy A03 Dual 1 64 GB azul 4 GB RAM",
+    "price": 1,
+    "available": 100,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/sm-a035mzkgzto/gallery/br-galaxy-a03-a035m-sm-a035mzkgzto-530799976?$720_576_PNG$",
+    "type": "Eletrônicos"
   },
   {
     "id": 5,
     "name": "Nutella Creme de Avelã 1 Unidade 140g",
     "price": 10.49,
     "available": 64,
-    "image": {
-      "first_option": "https://cf.shopee.com.br/file/a4e6b90762b7399494ac15e1d72550ca"
-    },
+    "image": "https://cf.shopee.com.br/file/a4e6b90762b7399494ac15e1d72550ca",
     "type": "Alimentos e Bebidas"
   }
 ]
